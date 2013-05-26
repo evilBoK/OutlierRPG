@@ -21,7 +21,7 @@ public class RPG_Game extends StateBasedGame {
 	public static void main(String[] args) {
 		try {
 			 AppGameContainer app = new AppGameContainer(new RPG_Game());
-	         app.setDisplayMode(800, 600, false);
+	         app.setDisplayMode(544, 544, false);
 	         app.setTargetFrameRate(119);
 	         app.setShowFPS(false);
 	         app.start();
