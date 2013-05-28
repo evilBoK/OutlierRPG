@@ -6,24 +6,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
-/*USING THE FILTER ON A TEXTBUTTON DOES NOT BLEND, BUT 'LAYER' THE COLORS, RESULTING IN DARKER TONES
- * This can be solved by making button's setFilterColor abstract and implementing it thus:
- * 
- * Color c = Color.white;
- *		for(Object o: displayFont.getEffects()) {
- *			if(o instanceof ColorEffect) {
- *				final ColorEffect e = (ColorEffect)o;
- *				java.awt.Color jc = e.getColor();
- *				c *= new Color(jc.getRed(), jc.getGreen(), jc.getBlue());
- *			}
- *		}
- *
- *		AND IN RENDER():
- *java.util.List l = displayFont.getEffects();
- *displayFont.getEffects().clear();
- *displayFont.drawString(x, y, text, filter.multiply(c));
- *displayFont.getEffects().add(l);
- */
 
 public class TextButton extends Button {
 	//TextButton

@@ -47,7 +47,6 @@ public abstract class Button implements GUIComponent, MouseListener {
 		if(gameState instanceof ButtonListener)
 			addListener((ButtonListener)gameState);
 		//Is this cast legal?
-		
 		gameState.register(this);
 	}
 	
@@ -122,7 +121,19 @@ public abstract class Button implements GUIComponent, MouseListener {
 	public boolean isMouseDown() {
 		return this.state.equals(State.Mouse_Down);
 	}
-	
+	public void setMouseOverSound(Sound mouseOverSound) {
+		this.mouseOverSound = mouseOverSound;
+	}
+	public void setMouseDownSound(Sound mouseDownSound) {
+		this.mouseDownSound = mouseDownSound;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
+
 	//Unimplemented Abstract methods
 	@Override
 	public void mouseWheelMoved(int arg0) {}
