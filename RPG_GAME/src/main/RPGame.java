@@ -1,10 +1,18 @@
 package main;
 
+import java.awt.Composite;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import gamestates.CharacterCreationState;
 import gamestates.MainMenuState;
 
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.CanvasGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,9 +31,9 @@ public class RPGame extends StateBasedGame {
 
 	public static void main(String[] args) {
 		try {
-			 AppGameContainer app = new AppGameContainer(new RPGame());
-	         app.setDisplayMode(816, 816, false);
-	         app.setTargetFrameRate(119);
+			 AppGameContainer app = new AppGameContainer(new ScalableGame(new RPGame(), 1088, 832, true));
+			 app.setDisplayMode(544, 416, false);
+	         app.setTargetFrameRate(60);
 	         app.setShowFPS(false);
 	         app.start();
 			}

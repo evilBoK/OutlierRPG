@@ -3,6 +3,7 @@ package gamestates;
 import gui.FontBuilder;
 import main.RPGame;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -39,7 +40,7 @@ public class MainMenuState extends BasicUIGameState implements ButtonListener {
 	public void enter(GameContainer gc, StateBasedGame sb) throws SlickException {
 		super.enter(gc, sb);
 		this.offset = 0;
-		
+
 		bgm.loop(1, 0);
 		bgm.fade(500, 1, false);
 	}
@@ -57,17 +58,17 @@ public class MainMenuState extends BasicUIGameState implements ButtonListener {
 		bgm = new Music("/res/Modified Resources/TitleLoop(Ship).ogg");
 		background = new Image("/res/Modified Resources/OceanBlue.png");
 		foreground = new Image("/res/Modified Resources/OceanWhite.png");
-		titleFont = FontBuilder.getInstance("/res/Fonts/alien5/ALIEN5.TTF").setSize(184).build();
+		titleFont = FontBuilder.getInstance("/res/Fonts/alien5/ALIEN5.TTF").addEffect(new ColorEffect(new java.awt.Color(0.75f, 0.75f, 1))).setSize(244).build();
 		
 		//Set Up the MenuButtons with 4 easy methods each:
-		UnicodeFont buttonFont = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(new java.awt.Color(0.9f, 0.9f, 0.9f))).setSize(42).build();
-		newGame	 = new TextButton(buttonFont, "New Game" , 307, 475, this);
-		loadGame = new TextButton(buttonFont, "Load Game", 301, 550, this);
-		settings = new TextButton(buttonFont, "Settings" , 334, 625, this);
-		exit	 = new TextButton(buttonFont, "Exit"	 , 376, 700, this);
+		UnicodeFont buttonFont = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(new java.awt.Color(0.9f, 0.9f, 0.9f))).setSize(54).build();
+		newGame	 = new TextButton(buttonFont, "New Game" , 414, 560, this);
+		loadGame = new TextButton(buttonFont, "Load Game", 407, 620, this);
+		settings = new TextButton(buttonFont, "Settings" , 448, 680, this);
+		exit	 = new TextButton(buttonFont, "Exit"	 , 503, 740, this);
 		
-		UnicodeFont f1 = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(new java.awt.Color(0.75f, 0.75f, 1))).setSize(42).build();
-		UnicodeFont f2 = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(java.awt.Color.white)).setSize(42).build();
+		UnicodeFont f1 = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(new java.awt.Color(0.75f, 0.75f, 1))).setSize(54).build();
+		UnicodeFont f2 = FontBuilder.getInstance("/res/Fonts/zekton/zekton.ttf").addEffect(new ColorEffect(java.awt.Color.white)).setSize(54).build();
 		newGame.setMouseOverFont(f1);
 		newGame.setMouseDownFont(f2);
 		loadGame.setMouseOverFont(f1);
@@ -88,29 +89,29 @@ public class MainMenuState extends BasicUIGameState implements ButtonListener {
 		exit.setMouseOverSound(s1);
 		exit.setMouseDownSound(s2);
 		
-		/* Print out the centered coordinates of the MenuButtons:
-		 * 
-		 * System.out.println(buttonFont.getLineHeight());
-		 * System.out.println((816-newGame.getWidth())/2);
-		 * System.out.println((816-loadGame.getWidth())/2);
-		 * System.out.println((816-settings.getWidth())/2);
-		 * System.out.println((816-exit.getWidth())/2);
-		*/
+		//Print the centered coordinates of the buttons
+//		System.out.println((1088 - titleFont.getWidth("Outlier"))/2);
+//		System.out.println(buttonFont.getLineHeight());
+//		System.out.println((1088-newGame.getWidth())/2);
+//		System.out.println((1088-loadGame.getWidth())/2);
+//		System.out.println((1088-settings.getWidth())/2);
+//		System.out.println((1088-exit.getWidth())/2);
+		
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta){
 		delta = delta>20? 20:delta;
 		
-		offset += ((float)delta)/25f;
-		offset %= 816;
+		offset += ((float)delta)/30f;
+		offset %= 1088;
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics g){
-		background.draw((int)offset, 0, 1.5f);
-		background.draw((int)offset-816, 0, 1.5f);
-		titleFont.drawString(144, 25, "Outlier",  new Color(0.75f, 0.75f, 1));
-		foreground.draw((int)offset, 0, 1.5f);
-		foreground.draw((int)offset-816, 0, 1.5f);
+		background.draw((int)offset, 0, 2);
+		background.draw((int)offset-1088, 0, 2);
+		titleFont.drawString(194, 10, "Outlier");
+		foreground.draw((int)offset, 0, 2);
+		foreground.draw((int)offset-1088, 0, 2);
 		
 		newGame.render(g);
 		loadGame.render(g);
@@ -120,6 +121,10 @@ public class MainMenuState extends BasicUIGameState implements ButtonListener {
 
 	@Override
 	public void buttonClicked(Button target) {
+		newGame.setActive(false);
+		loadGame.setActive(false);
+		settings.setActive(false);
+		
 		if(target.equals(newGame))
 			sb.enterState(RPGame.CHARACTER_CREATION_STATE, new FadeOutTransition(), new FadeInTransition());
 		else if(target.equals(loadGame))

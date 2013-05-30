@@ -102,8 +102,10 @@ public class TextInputBox implements GUIComponent, MouseListener, KeyListener {
 			for(int i=0; i<lines.size(); i++)
 				font.drawString(x, y+i*step, lines.get(i), Color.white);
 		}
-		if(state.equals(State.Selected) && renderCursor)
-			font.drawString(x+font.getWidth(lines.get(cLine).substring(0, cChar))-(font.getLeading()*2), y+cLine*step, "|");
+		if(state.equals(State.Selected) && renderCursor) {
+			String currentLine = lines.get(cLine);
+			font.drawString(x+font.getWidth(currentLine.substring(0, cChar))-font.getDescent(), y+cLine*step, "|");
+		}
 	}
 	
 	//TextBoxListener Methods
@@ -119,7 +121,7 @@ public class TextInputBox implements GUIComponent, MouseListener, KeyListener {
 			text.append(lines.get(i));
 			
 		for(TextBoxListener listener : listeners)
-			listener.textSubmitted(text.toString());
+			listener.textSubmitted(this, text.toString());
 		setState(State.Submitted);
 	}
 
@@ -195,6 +197,7 @@ public class TextInputBox implements GUIComponent, MouseListener, KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		if(button == 0 && body.contains(x, y) && !state.equals(State.Selected)) {
@@ -203,9 +206,11 @@ public class TextInputBox implements GUIComponent, MouseListener, KeyListener {
 			setState(State.Selected);
 		}
 		else if (!(button == 0 && body.contains(x, y)) && state.equals(State.Selected)) {
+			
 			for(TextBoxListener listener : listeners)
 				listener.lostFocus(this);
-			setState(State.Default);
+			if(state.equals(State.Selected))
+				setState(State.Default);
 		}
 	}
 
@@ -237,6 +242,18 @@ public class TextInputBox implements GUIComponent, MouseListener, KeyListener {
 			renderColor = submittedColor;
 			break;
 		}
+	}
+	
+	public boolean isDefault() {
+		return state.equals(State.Default);
+	}
+	
+	public boolean isSelected() {
+		return state.equals(State.Selected);
+	}
+	
+	public boolean isSubmitted() {
+		return state.equals(State.Submitted);
 	}
 	
 	public boolean setText(String text) {
